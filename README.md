@@ -156,7 +156,7 @@ python tracking/test.py cldtrack vitb_384_mae_ce_32x4_ep300 --dataset lasot --th
 
 
 ## Test FLOPs, and Speed
-*Note:* The speeds reported in our paper were tested on a single RTX2080Ti GPU.
+*Note:* The speeds reported in our paper were tested on a single GeForce RTX 3080 GPU.
 
 ```
 # Profiling vitb_384_mae_ce_32x4_ep300
