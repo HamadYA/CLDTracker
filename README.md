@@ -17,39 +17,18 @@ CLDTracker achieves SOTA performance on multiple benchmarks. CLDTracker and the 
 | CLDTracker  | 74.0         | 53.1        | 85.1              | 61.5        | 77.8        | 77.5        |
 
 
-### :star2: Fast Training
-OSTrack-256 can be trained in ~24 hours with 4*V100 (16GB of memory per GPU), which is much faster than recent SOTA transformer-based trackers. The fast training speed comes from:
-
-1. While previous Siamese-style trackers required separate feeding of the template and search region into the backbone at each iteration of training, OSTrack directly combines the template and search region. The tight and highly parallelized structure results in improved training and inference speed.
-  
-2. The proposed early candidate elimination (ECE) module significantly reduces memory and time consumption.
-  
-3. Pretrained Transformer weights enable faster convergence.
-
-### :star2: Good performance-speed trade-off
-
-[//]: # (![speed_vs_performance]&#40;https://github.com/botaoye/OSTrack/blob/main/assets/speed_vs_performance.png&#41;)
-<p align="center">
-  <img width="70%" src="https://github.com/botaoye/OSTrack/blob/main/assets/speed_vs_performance.png" alt="speed_vs_performance"/>
-</p>
-
 ## Install the environment
-**Option1**: Use the Anaconda (CUDA 10.2)
+**Option1**: Use the Anaconda (CUDA 11.3)
 ```
-conda create -n ostrack python=3.8
-conda activate ostrack
-bash install.sh
+conda create -n cldtrack python=3.8.5 -y
+conda activate cldtrack
+bash install_env.sh
 ```
 
 **Option2**: Use the Anaconda (CUDA 11.3)
 ```
-conda env create -f ostrack_cuda113_env.yaml
+conda env create -f cldtrack_env.yaml
 ```
-
-**Option3**: Use the docker file
-
-We provide the full docker file here.
-
 
 ## Set project paths
 Run the following command to set paths for this project
@@ -85,50 +64,89 @@ Put the tracking datasets in ./data. It should look like this:
             ...
             |-- TRAIN_11
             |-- TEST
+        -- TNL2K
+            |-- TRAIN
+            |-- TEST
+            ...
+        -- LaSOText
+            |-- atv
+            |-- badminton
+            ...
+        -- OTB99-Lang
+            |-- Basketball
+            |-- Biker
+            |-- Bird1
+            ...
    ```
 
+Dataset Download Links:
+- [LaSOT](https://github.com/HengLan/LaSOT_Evaluation_Toolkit)
+- [LaSOT EXT](https://github.com/HengLan/LaSOT_Evaluation_Toolkit)
+- [TNL2K](https://github.com/wangxiao5791509/TNL2K_evaluation_toolkit)
+- [TrackingNet](https://github.com/SilvioGiancola/TrackingNet-devkit)
+- [GOT-10k](https://github.com/got-10k/toolkit)
+- [OTB99-Lang](http://isis-data.science.uva.nl/zhenyang/cvpr17-langtracker/data/OTB_sentences.zip)
 
 ## Training
 Download pre-trained [MAE ViT-Base weights](https://dl.fbaipublicfiles.com/mae/pretrain/mae_pretrain_vit_base.pth) and put it under `$PROJECT_ROOT$/pretrained_models` (different pretrained models can also be used, see [MAE](https://github.com/facebookresearch/mae) for more details).
 
 ```
-python tracking/train.py --script ostrack --config vitb_256_mae_ce_32x4_ep300 --save_dir ./output --mode multiple --nproc_per_node 4 --use_wandb 1
+python tracking/train.py --script cldtrack --config vitb_384_mae_ce_32x4_ep300 --save_dir ./output --mode single --nproc_per_node 1 --use_wandb 0
+# or
+python tracking/train.py --script cldtrack --config vitb_384_mae_ce_32x4_ep300 --save_dir ./output --mode multiple --nproc_per_node 4 --use_wandb 0
 ```
 
-Replace `--config` with the desired model config under `experiments/ostrack`. We use [wandb](https://github.com/wandb/client) to record detailed training logs, in case you don't want to use wandb, set `--use_wandb 0`.
+Replace `--config` with the desired model config under `experiments/cldtrack`. We use [wandb](https://github.com/wandb/client) to record detailed training logs, in case you don't want to use wandb, set `--use_wandb 0`.
 
 
 ## Evaluation
 Download the model weights from [Google Drive](https://drive.google.com/drive/folders/1PS4inLS8bWNCecpYZ0W2fE5-A04DvTcd?usp=sharing) 
 
-Put the downloaded weights on `$PROJECT_ROOT$/output/checkpoints/train/ostrack`
+Put the downloaded weights on `$PROJECT_ROOT$/output/checkpoints/train/cldtrack`
 
 Change the corresponding values of `lib/test/evaluation/local.py` to the actual benchmark saving paths
 
 Some testing examples:
 - LaSOT or other off-line evaluated benchmarks (modify `--dataset` correspondingly)
 ```
-python tracking/test.py ostrack vitb_384_mae_ce_32x4_ep300 --dataset lasot --threads 16 --num_gpus 4
+# LaSOT
+python tracking/test.py cldtrack vitb_384_mae_ce_32x4_ep300 --dataset lasot --threads 1 --num_gpus 1
+python tracking/analysis_results.py # need to modify tracker configs and names
+
+# LaSOText
+python tracking/test.py cldtrack vitb_384_mae_ce_32x4_ep300 --dataset lasotextensionsubset --threads 1 --num_gpus 1
+python tracking/analysis_results.py # need to modify tracker configs and names
+
+# OTB99-Lang
+python tracking/test.py cldtrack vitb_384_mae_ce_32x4_ep300 --dataset otb --threads 1 --num_gpus 1
+python tracking/analysis_results.py # need to modify tracker configs and names
+
+# TNL2K
+python tracking/test.py cldtrack vitb_384_mae_ce_32x4_ep300 --dataset tnl2k --threads 1 --num_gpus 1
 python tracking/analysis_results.py # need to modify tracker configs and names
 ```
 - GOT10K-test
 ```
-python tracking/test.py ostrack vitb_384_mae_ce_32x4_got10k_ep100 --dataset got10k_test --threads 16 --num_gpus 4
-python lib/test/utils/transform_got10k.py --tracker_name ostrack --cfg_name vitb_384_mae_ce_32x4_got10k_ep100
+python tracking/test.py cldtrack vitb_384_mae_ce_32x4_got10k_ep100 --dataset got10k_test --threads 1 --num_gpus 1
+python lib/test/utils/transform_got10k.py --tracker_name cldtrack --cfg_name vitb_384_mae_ce_32x4_got10k_ep100
 ```
 - TrackingNet
 ```
-python tracking/test.py ostrack vitb_384_mae_ce_32x4_ep300 --dataset trackingnet --threads 16 --num_gpus 4
-python lib/test/utils/transform_trackingnet.py --tracker_name ostrack --cfg_name vitb_384_mae_ce_32x4_ep300
+python tracking/test.py cldtrack vitb_384_mae_ce_32x4_ep300 --dataset trackingnet --threads 1 --num_gpus 1
+python lib/test/utils/transform_trackingnet.py --tracker_name cldtrack --cfg_name vitb_384_mae_ce_32x4_ep300
 ```
 
 ## Visualization or Debug 
 [Visdom](https://github.com/fossasia/visdom) is used for visualization. 
 1. Alive visdom in the server by running `visdom`:
 
-2. Simply set `--debug 1` during inference for visualization, e.g.:
+2. Simply type visdom in a terminal and in another terminal set `--debug 1` during inference for visualization, e.g.:
 ```
-python tracking/test.py ostrack vitb_384_mae_ce_32x4_ep300 --dataset vot22 --threads 1 --num_gpus 1 --debug 1
+# termminal 1
+visdom
+
+# terminal 2
+python tracking/test.py cldtrack vitb_384_mae_ce_32x4_ep300 --dataset lasot --threads 1 --num_gpus 1 --debug 1
 ```
 3. Open `http://localhost:8097` in your browser (remember to change the IP address and port according to the actual situation).
 
