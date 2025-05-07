@@ -152,7 +152,7 @@ python tracking/test.py cldtrack vitb_384_mae_ce_32x4_ep300 --dataset lasot --th
 
 4. Then you can visualize the candidate elimination process (inherited from OSTrack).
 
-![ECE_vis](assets/CE.png)
+![ECE_vis](assets/CE_1.png)
 
 
 ## Test FLOPs, and Speed
