@@ -150,7 +150,7 @@ python tracking/test.py cldtrack vitb_384_mae_ce_32x4_ep300 --dataset lasot --th
 ```
 3. Open `http://localhost:8097` in your browser (remember to change the IP address and port according to the actual situation).
 
-4. Then you can visualize the candidate elimination process (inherited from OSTrack).
+4. Then you can visualize the results.
 
 ![ECE_vis](assets/CE_1.png)
 
