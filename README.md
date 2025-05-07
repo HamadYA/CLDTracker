@@ -6,6 +6,10 @@ The official implementation for the CLDTracker: A Comprehensive Language Descrip
   <img width="85%" src="assets/CLDTracker.png" alt="Framework"/>
 </p>
 
+<p align="center">
+<img src="assets/demo.gif" width="600">
+</p>
+
 ## Highlights
 
 ### :star2: New Comprehensive Language Description for Visual Tracking Tracking Framework
