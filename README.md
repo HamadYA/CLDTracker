@@ -1,19 +1,7 @@
 # CLDTracker
-CLDTracker: A Comprehensive Language Description Towards Improved Visual Tracking
+The official implementation for the CLDTracker: A Comprehensive Language Description for Visual Tracking.
 
-## News
-
-We plan to release the following! Please stay tuned.
-
-
-## Opensource progress
-
-- [ ] Release the Bag of Textual Descriptions. (To be done)
-- [ ] Release of the training and testing code. (To be done) 
-
-## Introduction
-- This repository contains the official implementation of CLDTracker: A Comprehensive Language Description Towards Improved Visual Tracking.
-
-![CLDTrack](/assets/CLDTracker.png)
-
-The code will be released soon.
+[[Models](https://drive.google.com/drive/folders/1ttafo0O5S9DXK2PX0YqPvPrQ-HWJjhSy?usp=sharing)][[Raw Results](https://drive.google.com/drive/folders/1TYU5flzZA1ap2SLdzlGRQDbObwMxCiaR?usp=sharing)]
+<p align="center">
+  <img width="85%" src="assets/CLDTracker.png" alt="Framework"/>
+</p>
