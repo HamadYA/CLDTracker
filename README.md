@@ -159,26 +159,20 @@ python tracking/test.py cldtrack vitb_384_mae_ce_32x4_ep300 --dataset lasot --th
 *Note:* The speeds reported in our paper were tested on a single RTX2080Ti GPU.
 
 ```
-# Profiling vitb_256_mae_ce_32x4_ep300
-python tracking/profile_model.py --script ostrack --config vitb_256_mae_ce_32x4_ep300
 # Profiling vitb_384_mae_ce_32x4_ep300
-python tracking/profile_model.py --script ostrack --config vitb_384_mae_ce_32x4_ep300
+python tracking/profile_model.py --script cldtrack --config vitb_384_mae_ce_32x4_ep300
 ```
 
 
 ## Acknowledgments
-* Thanks for the [STARK](https://github.com/researchmm/Stark) and [PyTracking](https://github.com/visionml/pytracking) library, which helps us to quickly implement our ideas.
-* We use the implementation of the ViT from the [Timm](https://github.com/rwightman/pytorch-image-models) repo.  
-
+* Thanks for the [OSTrack](https://github.com/botaoye/OSTrack), [CiteTracker](https://github.com/NorahGreen/CiteTracker), [STARK](https://github.com/researchmm/Stark), and [PyTracking](https://github.com/visionml/pytracking) libraries, which helps us to quickly implement our ideas.
+* Also we would like to thank [CoCoOp](https://github.com/KaiyangZhou/CoOp/), [WaffleCLIP](https://github.com/ExplainableML/WaffleCLIP), and [CLIP Adapter](https://github.com/gaopengcuhk/CLIP-Adapter).
+* We use the implementation of the ViT from the [Timm](https://github.com/rwightman/pytorch-image-models) repo.
+* We would like to thank the abovementioned works for their valuable contributions to the field and for sharing their work with the community. Their ideas and code have been instrumental in the development of this project and we are grateful for the opportunity to build upon their work.
 
 ## Citation
 If our work is useful for your research, please consider citing:
 
-```Bibtex
-@inproceedings{ye2022ostrack,
-  title={Joint Feature Learning and Relation Modeling for Tracking: A One-Stream Framework},
-  author={Ye, Botao and Chang, Hong and Ma, Bingpeng and Shan, Shiguang and Chen, Xilin},
-  booktitle={ECCV},
-  year={2022}
-}
+```
+
 ```
