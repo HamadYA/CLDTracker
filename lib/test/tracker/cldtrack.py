@@ -21,7 +21,10 @@ class CLDTracker(BaseTracker):
         network = build_cldtrack(params.cfg, training=False)
         
         # network.load_state_dict(torch.load(self.params.checkpoint, map_location='cpu')['net'], strict=True)
-        network.load_state_dict(torch.load(self.params.checkpoint, map_location='cpu')['net'], strict=False)
+        ckpts = torch.load(self.params.checkpoint, map_location='cpu')['net']
+        # ckpts.pop('backbone.pos_embed_z')
+        # ckpts.pop('backbone.pos_embed_x')
+        network.load_state_dict(ckpts, strict=False)
 
         self.cfg = params.cfg
         self.network = network.cuda()
