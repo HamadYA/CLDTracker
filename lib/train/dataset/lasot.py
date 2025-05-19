@@ -49,6 +49,8 @@ class Lasot(BaseVideoDataset):
 
         self.seq_per_class = self._build_class_list()
 
+        self.subdir = None
+
     def _build_sequence_list(self, vid_ids=None, split=None):
         if split is not None:
             if vid_ids is not None:
@@ -58,7 +60,6 @@ class Lasot(BaseVideoDataset):
                 file_path = os.path.join(ltr_path, 'data_specs', 'lasot_train_split.txt')
             else:
                 raise ValueError('Unknown split name.')
-            # sequence_list = pandas.read_csv(file_path, header=None, squeeze=True).values.tolist()
             sequence_list = pandas.read_csv(file_path, header=None).squeeze("columns").values.tolist()
         elif vid_ids is not None:
             sequence_list = [c+'-'+str(v) for c in self.class_list for v in vid_ids]
@@ -120,6 +121,8 @@ class Lasot(BaseVideoDataset):
         class_name = seq_name.split('-')[0]
         vid_id = seq_name.split('-')[1]
 
+        self.subdir = seq_name
+
         return os.path.join(self.root, class_name, class_name + '-' + vid_id)
 
     def get_sequence_info(self, seq_id):
@@ -135,7 +138,11 @@ class Lasot(BaseVideoDataset):
         return os.path.join(seq_path, 'img', '{:08}.jpg'.format(frame_id+1))    # frames start from 1
 
     def _get_frame(self, seq_path, frame_id):
-        return self.image_loader(self._get_frame_path(seq_path, frame_id))
+        frame_path = self._get_frame_path(seq_path, frame_id)
+        frame = self.image_loader(frame_path)
+        # return frame, frame_path
+
+        return frame, self.subdir
 
     def _get_class(self, seq_path):
         raw_class = seq_path.split('/')[-2]
@@ -144,14 +151,18 @@ class Lasot(BaseVideoDataset):
     def get_class_name(self, seq_id):
         seq_path = self._get_sequence_path(seq_id)
         obj_class = self._get_class(seq_path)
-
         return obj_class
 
     def get_frames(self, seq_id, frame_ids, anno=None):
         seq_path = self._get_sequence_path(seq_id)
 
         obj_class = self._get_class(seq_path)
-        frame_list = [self._get_frame(seq_path, f_id) for f_id in frame_ids]
+        frame_list = []
+        frame_paths = []
+        for f_id in frame_ids:
+            frame, frame_path = self._get_frame(seq_path, f_id)
+            frame_list.append(frame)
+            frame_paths.append(frame_path)
 
         if anno is None:
             anno = self.get_sequence_info(seq_id)
@@ -166,4 +177,4 @@ class Lasot(BaseVideoDataset):
                                    'root_class': None,
                                    'motion_adverb': None})
 
-        return frame_list, anno_frames, object_meta
+        return frame_list, anno_frames, object_meta, frame_paths

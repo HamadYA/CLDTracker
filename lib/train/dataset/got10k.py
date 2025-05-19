@@ -59,21 +59,21 @@ class Got10k(BaseVideoDataset):
                 file_path = os.path.join(ltr_path, 'data_specs', 'got10k_vot_val_split.txt')
             else:
                 raise ValueError('Unknown split name.')
-            # seq_ids = pandas.read_csv(file_path, header=None, squeeze=True, dtype=np.int64).values.tolist()
             seq_ids = pandas.read_csv(file_path, header=None, dtype=np.int64).squeeze("columns").values.tolist()
         elif seq_ids is None:
             seq_ids = list(range(0, len(self.sequence_list)))
 
-        self.sequence_list = [self.sequence_list[i] for i in seq_ids]
-
         if data_fraction is not None:
-            self.sequence_list = random.sample(self.sequence_list, int(len(self.sequence_list)*data_fraction))
+            self.sequence_list = random.sample(self.sequence_list, int(len(self.sequence_list) * data_fraction))
 
         self.sequence_meta_info = self._load_meta_info()
         self.seq_per_class = self._build_seq_per_class()
 
         self.class_list = list(self.seq_per_class.keys())
+        self.class_list = [c for c in self.class_list if c is not None]
         self.class_list.sort()
+
+        self.subdir = None
 
     def get_name(self):
         return 'got10k'
@@ -127,7 +127,11 @@ class Got10k(BaseVideoDataset):
         return dir_list
 
     def _read_bb_anno(self, seq_path):
+        
         bb_anno_file = os.path.join(seq_path, "groundtruth.txt")
+        # seq_name = seq_path.split('/')[-1]
+        # bb_anno_file = os.path.join(seq_path, seq_name+'.txt')
+
         gt = pandas.read_csv(bb_anno_file, delimiter=',', header=None, dtype=np.float32, na_filter=False, low_memory=False).values
         return torch.tensor(gt)
 
@@ -141,7 +145,7 @@ class Got10k(BaseVideoDataset):
         with open(cover_file, 'r', newline='') as f:
             cover = torch.ByteTensor([int(v[0]) for v in csv.reader(f)])
 
-        target_visible = ~occlusion & (cover>0).byte()
+        target_visible = ~occlusion & (cover > 0).byte()
 
         visible_ratio = cover.float() / 8
         return target_visible, visible_ratio
@@ -160,10 +164,13 @@ class Got10k(BaseVideoDataset):
         return {'bbox': bbox, 'valid': valid, 'visible': visible, 'visible_ratio': visible_ratio}
 
     def _get_frame_path(self, seq_path, frame_id):
-        return os.path.join(seq_path, '{:08}.jpg'.format(frame_id+1))    # frames start from 1
+        return os.path.join(seq_path, '{:08}.jpg'.format(frame_id + 1))    # frames start from 1
 
     def _get_frame(self, seq_path, frame_id):
-        return self.image_loader(self._get_frame_path(seq_path, frame_id))
+        frame_path = self._get_frame_path(seq_path, frame_id)
+        frame = self.image_loader(frame_path)
+        # return frame, frame_path
+        return frame, self.subdir
 
     def get_class_name(self, seq_id):
         obj_meta = self.sequence_meta_info[self.sequence_list[seq_id]]
@@ -174,7 +181,14 @@ class Got10k(BaseVideoDataset):
         seq_path = self._get_sequence_path(seq_id)
         obj_meta = self.sequence_meta_info[self.sequence_list[seq_id]]
 
-        frame_list = [self._get_frame(seq_path, f_id) for f_id in frame_ids]
+        self.subdir = self.sequence_list[seq_id]
+
+        frame_list = []
+        frame_paths = []
+        for f_id in frame_ids:
+            frame, frame_path = self._get_frame(seq_path, f_id)
+            frame_list.append(frame)
+            frame_paths.append(frame_path)
 
         if anno is None:
             anno = self.get_sequence_info(seq_id)
@@ -183,4 +197,4 @@ class Got10k(BaseVideoDataset):
         for key, value in anno.items():
             anno_frames[key] = [value[f_id, ...].clone() for f_id in frame_ids]
 
-        return frame_list, anno_frames, obj_meta
+        return frame_list, anno_frames, obj_meta, frame_paths

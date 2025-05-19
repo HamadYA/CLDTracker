@@ -54,7 +54,7 @@ class MSCOCO(BaseImageDataset):
 
         self.cats = self.coco_set.cats
 
-        self.class_list = self.get_class_list()  # the parent class thing would happen in the sampler
+        self.class_list = self.get_class_list()
 
         self.image_list = self._get_image_list(min_area=min_area)
 
@@ -117,13 +117,13 @@ class MSCOCO(BaseImageDataset):
 
     def _get_anno(self, im_id):
         anno = self.coco_set.anns[self.image_list[im_id]]
-
         return anno
 
     def _get_image(self, im_id):
         path = self.coco_set.loadImgs([self.coco_set.anns[self.image_list[im_id]]['image_id']])[0]['file_name']
         img = self.image_loader(os.path.join(self.img_pth, path))
-        return img
+        # return img, os.path.join(self.img_pth, path)
+        return img, path
 
     def get_meta_info(self, im_id):
         try:
@@ -146,11 +146,11 @@ class MSCOCO(BaseImageDataset):
         return cat_dict_current['name']
 
     def get_image(self, image_id, anno=None):
-        frame = self._get_image(image_id)
+        frame, frame_path = self._get_image(image_id)
 
         if anno is None:
             anno = self.get_image_info(image_id)
 
         object_meta = self.get_meta_info(image_id)
 
-        return frame, anno, object_meta
+        return frame, anno, object_meta, frame_path

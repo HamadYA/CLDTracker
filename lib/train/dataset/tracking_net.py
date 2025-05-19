@@ -57,7 +57,8 @@ class TrackingNet(BaseVideoDataset):
         super().__init__('TrackingNet', root, image_loader)
 
         if set_ids is None:
-            set_ids = [i for i in range(12)]
+            # set_ids = [i for i in range(12)]
+            set_ids = [i for i in range(4)]
 
         self.set_ids = set_ids
 
@@ -131,7 +132,13 @@ class TrackingNet(BaseVideoDataset):
         return obj_class
 
     def get_frames(self, seq_id, frame_ids, anno=None):
-        frame_list = [self._get_frame(seq_id, f) for f in frame_ids]
+        # frame_list = [self._get_frame(seq_id, f) for f in frame_ids]
+        frame_list = []
+        frame_paths = []
+        for f_id in frame_ids:
+            frame, frame_path = self._get_frame(seq_id, f_id)
+            frame_list.append(frame)
+            frame_paths.append(frame_path)
 
         if anno is None:
             anno = self.get_sequence_info(seq_id)
@@ -148,4 +155,4 @@ class TrackingNet(BaseVideoDataset):
                                    'root_class': None,
                                    'motion_adverb': None})
 
-        return frame_list, anno_frames, object_meta
+        return frame_list, anno_frames, object_meta, frame_paths
