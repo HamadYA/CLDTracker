@@ -1,7 +1,7 @@
 # CLDTracker
 The official implementation for the CLDTracker: A Comprehensive Language Description for Visual Tracking.
 
-[[Models](https://drive.google.com/drive/folders/1esbW6QYsw0VY2OM-NrhSzek6Ve3LyhQ4)][[Raw Results](https://drive.google.com/drive/folders/1esbW6QYsw0VY2OM-NrhSzek6Ve3LyhQ4?usp=sharing)]
+[[Models](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/Eg-TriiiHIBAiGCqqAHJO4UB68mvh-0wDliKxOa2l6a9Pw?e=tMyjhZ)][[Raw Results](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/Ers1qJiVr4JLpgA3NARQ9aoBjQJjPpTG7lCFNwTkHSfH1g?e=vUuZbe)]
 <p align="center">
   <img width="85%" src="assets/CLDTracker.png" alt="Framework"/>
 </p>
