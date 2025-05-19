@@ -18,7 +18,7 @@ from torch.nn import  functional as F
 class CLDTracker(nn.Module):
     """ This is the base class for CLDTracker """
 
-    def __init__(self, transformer, box_head, aux_loss=False, head_type="CORNER"):
+    def __init__(self, transformer, box_head, aux_loss=False, head_type="CORNER", training=False):
         """ Initializes the model.
         Parameters:
             transformer: torch module of the transformer architecture.
@@ -27,8 +27,9 @@ class CLDTracker(nn.Module):
         super().__init__()
         self.backbone = transformer
         self.box_head = box_head
+        self.training = training
 
-        self.category_embedding = Category_embedding()
+        self.category_embedding = Category_embedding(training=training)
 
         self.aux_loss = aux_loss
         self.head_type = head_type
@@ -161,6 +162,7 @@ def build_cldtrack(cfg, training=True):
         box_head,
         aux_loss=False,
         head_type=cfg.MODEL.HEAD.TYPE,
+        training=training
     )
 
     if 'CLDTracker' in cfg.MODEL.PRETRAIN_FILE and training:
