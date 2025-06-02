@@ -1,5 +1,7 @@
 # CLDTracker
 The official implementation for the CLDTracker: A Comprehensive Language Description for Visual Tracking.
+Accepted at Information Fusion.
+[Paper](https://arxiv.org/abs/2505.23704)
 
 [[Models](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/Eg-TriiiHIBAiGCqqAHJO4UB68mvh-0wDliKxOa2l6a9Pw?e=tMyjhZ)][[Raw Results](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/Ers1qJiVr4JLpgA3NARQ9aoBjQJjPpTG7lCFNwTkHSfH1g?e=vUuZbe)][[Comprehensive Bag of Textual Descriptions](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/EpW-3IS5sXVGlI0k7AzJQhMBw2sCZnHfBeXiBXYxAuFCBg?e=dN4Fve)]
 <p align="center">
@@ -178,5 +180,10 @@ python tracking/profile_model.py --script cldtrack --config vitb_384_mae_ce_32x4
 If our work is useful for your research, please consider citing:
 
 ```
-
+@article{alansari2025cldtracker,
+  title={CLDTracker: A Comprehensive Language Description for Visual Tracking},
+  author={Alansari, Mohamad and Javed, Sajid and Ganapathi, Iyyakutti Iyappan and Alansari, Sara and Naseer, Muzammal},
+  journal={arXiv preprint arXiv:2505.23704},
+  year={2025}
+}
 ```
