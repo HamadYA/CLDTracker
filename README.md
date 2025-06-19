@@ -1,7 +1,7 @@
 # CLDTracker
 The official implementation for the CLDTracker: A Comprehensive Language Description for Visual Tracking.
 
-Accepted at Information Fusion [Paper](https://arxiv.org/abs/2505.23704).
+Accepted at Information Fusion [Paper](https://www.sciencedirect.com/science/article/pii/S1566253525004476#:~:text=CLDTracker%20is%20a%20multi%2Dmodal,)%20and%20exemplar%20image%20(%20).) [arXiv](https://arxiv.org/abs/2505.23704)
 
 [[Models](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/Eg-TriiiHIBAiGCqqAHJO4UB68mvh-0wDliKxOa2l6a9Pw?e=tMyjhZ)][[Raw Results](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/Ers1qJiVr4JLpgA3NARQ9aoBjQJjPpTG7lCFNwTkHSfH1g?e=vUuZbe)][[Comprehensive Bag of Textual Descriptions](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/EpW-3IS5sXVGlI0k7AzJQhMBw2sCZnHfBeXiBXYxAuFCBg?e=dN4Fve)]
 <p align="center">
@@ -180,6 +180,18 @@ python tracking/profile_model.py --script cldtrack --config vitb_384_mae_ce_32x4
 If our work is useful for your research, please consider citing:
 
 ```
+@article{alansari2025cldtracker,
+title = {CLDTracker: A Comprehensive Language Description for visual Tracking},
+journal = {Information Fusion},
+volume = {124},
+pages = {103374},
+year = {2025},
+issn = {1566-2535},
+doi = {https://doi.org/10.1016/j.inffus.2025.103374},
+url = {https://www.sciencedirect.com/science/article/pii/S1566253525004476},
+author = {Mohamad Alansari and Sajid Javed and Iyyakutti Iyappan Ganapathi and Sara Alansari and Muzammal Naseer},
+}
+
 @article{alansari2025cldtracker,
   title={CLDTracker: A Comprehensive Language Description for Visual Tracking},
   author={Alansari, Mohamad and Javed, Sajid and Ganapathi, Iyyakutti Iyappan and Alansari, Sara and Naseer, Muzammal},
