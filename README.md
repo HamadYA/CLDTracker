@@ -3,7 +3,7 @@ The official implementation for the CLDTracker: A Comprehensive Language Descrip
 
 Accepted at Information Fusion [[Paper](https://doi.org/10.1016/j.inffus.2025.103374)] [[arXiv](https://arxiv.org/abs/2505.23704)]
 
-[[Models](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/Eg-TriiiHIBAiGCqqAHJO4UB68mvh-0wDliKxOa2l6a9Pw?e=tMyjhZ)][[Raw Results](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/Ers1qJiVr4JLpgA3NARQ9aoBjQJjPpTG7lCFNwTkHSfH1g?e=vUuZbe)][[Comprehensive Bag of Textual Descriptions](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/EpW-3IS5sXVGlI0k7AzJQhMBw2sCZnHfBeXiBXYxAuFCBg?e=dN4Fve)]
+[[Models](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/Eg-TriiiHIBAiGCqqAHJO4UB68mvh-0wDliKxOa2l6a9Pw?e=TtTO5u)][[Raw Results](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/Ers1qJiVr4JLpgA3NARQ9aoBjQJjPpTG7lCFNwTkHSfH1g?e=ii219o)][[Comprehensive Bag of Textual Descriptions](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/EpW-3IS5sXVGlI0k7AzJQhMBw2sCZnHfBeXiBXYxAuFCBg?e=biAAom)]
 <p align="center">
   <img width="85%" src="assets/CLDTracker.png" alt="Framework"/>
 </p>
