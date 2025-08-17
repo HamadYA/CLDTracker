@@ -106,7 +106,7 @@ Replace `--config` with the desired model config under `experiments/cldtrack`. W
 
 
 ## Evaluation
-Download the model weights from [Google Drive](https://drive.google.com/drive/folders/1PS4inLS8bWNCecpYZ0W2fE5-A04DvTcd?usp=sharing) 
+Download the model weights from [Google Drive](https://kuacae-my.sharepoint.com/:f:/g/personal/100061914_ku_ac_ae/Eg-TriiiHIBAiGCqqAHJO4UB68mvh-0wDliKxOa2l6a9Pw?e=TtTO5u) 
 
 Put the downloaded weights on `$PROJECT_ROOT$/output/checkpoints/train/cldtrack`
 
